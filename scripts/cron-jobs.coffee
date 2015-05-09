@@ -25,7 +25,7 @@ module.exports = (robot) ->
     notification()
 
   new CronJob(
-    cronTime: "0 0 10 * * *"
+    cronTime: "0 0 10 * * 1-5"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
@@ -44,7 +44,7 @@ module.exports = (robot) ->
     confirm()
 
   new CronJob(
-    cronTime: "0 0 12 * * *"
+    cronTime: "0 0 12 * * 1-5"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
@@ -60,7 +60,7 @@ module.exports = (robot) ->
     resetReportedMember()
 
   new CronJob(
-    cronTime: "0 0 24 * * *"
+    cronTime: "0 0 24 * * 1-5"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
