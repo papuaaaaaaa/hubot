@@ -26,7 +26,7 @@ module.exports = (robot) ->
     notification()
 
   new CronJob(
-    cronTime: "0 0 24 * * *"
+    cronTime: "0 0 10 * * *"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
