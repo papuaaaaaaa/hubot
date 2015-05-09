@@ -40,7 +40,7 @@ module.exports = (robot) ->
     reported_member = (robot.brain.get REPORTED_MEMBER_KEY) or []
     members = (robot.brain.get MEMBER_LIST_KEY) or []
     diff = (list1, list2)-> (value for value in list1 when list2.indexOf(value) is -1)
-    robot.send {room: CHANNEL}, "デイリースクラムしましたか？ #{diff(reported_member, members)}"
+    robot.send {room: CHANNEL}, "デイリースクラムしましたか？ #{diff(members, reported_member)}"
 
   robot.respond /test confirm/i, (msg) ->
     confirm()
