@@ -12,7 +12,6 @@
 CronJob = require("cron").CronJob
 
 module.exports = (robot) ->
-
   MEMBER_LIST_KEY = 'member_list'
   REPORTED_MEMBER_KEY = 'reported_member_list'
   CHANNEL = '#bot_test'
@@ -30,10 +29,9 @@ module.exports = (robot) ->
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
-     notification()
-     return
+      notification()
+      return
   )
-
 
 
   confirm = ->
@@ -53,7 +51,6 @@ module.exports = (robot) ->
       confirm
       return
   )
-
 
 
   resetReportedMember = ->
