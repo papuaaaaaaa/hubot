@@ -14,7 +14,7 @@ module.exports = (robot) ->
   REPORTED_MEMBER_KEY = 'reported_member_list'
 
   robot.hear /daily.*/i, (msg) ->
-    sender = msg.message.user.name
+    sender = '@' + msg.message.user.name
     reported_member = (robot.brain.get REPORTED_MEMBER_KEY) or []
     if reported_member.indexOf(sender) == -1
       reported_member.push(sender)
