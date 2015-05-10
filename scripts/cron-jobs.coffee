@@ -14,7 +14,7 @@ CronJob = require("cron").CronJob
 module.exports = (robot) ->
   MEMBER_LIST_KEY = 'member_list'
   REPORTED_MEMBER_KEY = 'reported_member_list'
-  CHANNEL = 'bot_test'
+  CHANNEL = 'scrum'
 
   notification = ->
     members = (robot.brain.get MEMBER_LIST_KEY) or []
