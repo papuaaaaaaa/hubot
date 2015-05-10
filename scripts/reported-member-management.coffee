@@ -23,6 +23,6 @@ module.exports = (robot) ->
   robot.hear /reported list/i, (msg) ->
     reported_member = (robot.brain.get REPORTED_MEMBER_KEY) or []
     if reported_member.length
-      msg.send "#{reported_member}"
+      msg.send "\"#{reported_member}\""
     else
       msg.send "[]"
