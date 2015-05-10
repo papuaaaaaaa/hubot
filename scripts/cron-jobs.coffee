@@ -48,7 +48,7 @@ module.exports = (robot) ->
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
-      confirm
+      confirm()
       return
   )
 
@@ -64,6 +64,6 @@ module.exports = (robot) ->
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
-      resetReportedMember
+      resetReportedMember()
       return
   )
