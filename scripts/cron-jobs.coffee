@@ -19,7 +19,7 @@ module.exports = (robot) ->
   notification = ->
     members = (robot.brain.get MEMBER_LIST_KEY) or []
     robot.send {room: CHANNEL},
-      "そろそろデイリースクラムはじめてください。 #{members}"
+      "そろそろデイリースクラムはじめてください。dailyと文中にいれてください。 #{members}"
 
   robot.respond /test notification/i, (msg) ->
     notification()
