@@ -19,7 +19,7 @@ module.exports = (robot) ->
   notification = ->
     members = (robot.brain.get MEMBER_LIST_KEY) or []
     robot.send {room: CHANNEL},
-      "みなさんそろそろデイリースクラムのお時間ですよ。dailyと文中にいれてくださいね。\n #{members.join(' ')}"
+      "みなさんそろそろデイリースクラムのお時間ですよ。dailyと文中にいれてくださいね。\n <#{members.join('> <')}>"
 
   robot.respond /test notification/i, (msg) ->
     notification()
@@ -39,7 +39,7 @@ module.exports = (robot) ->
     members = (robot.brain.get MEMBER_LIST_KEY) or []
     diff = (list1, list2)-> (value for value in list1 when list2.indexOf(value) is -1)
     robot.send {room: CHANNEL},
-      "一緒にデイリースクラムしましょうよお。\n #{diff(members, reported_member).join(' ')}"
+      "一緒にデイリースクラムしましょうよお。\n <#{diff(members, reported_member).join('> <')}>"
 
   robot.respond /test confirm/i, (msg) ->
     confirm()
