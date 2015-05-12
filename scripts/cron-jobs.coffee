@@ -17,9 +17,11 @@ module.exports = (robot) ->
   CHANNEL = 'scrum'
 
   notification = ->
+    reported_member = (robot.brain.get REPORTED_MEMBER_KEY) or []
     members = (robot.brain.get MEMBER_LIST_KEY) or []
+    diff = (list1, list2)-> (value for value in list1 when list2.indexOf(value) is -1)
     robot.send {room: CHANNEL},
-      "みなさんそろそろデイリースクラムのお時間ですよ。dailyと文中にいれてくださいね。\n <#{members.join('> <')}>"
+      "みなさんそろそろデイリースクラムのお時間ですよ。dailyと文中にいれてくださいね。\n <#{diff(members, reported_member).join('> <')}>"
 
   robot.respond /test notification/i, (msg) ->
     notification()
