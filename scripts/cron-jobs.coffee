@@ -20,8 +20,12 @@ module.exports = (robot) ->
     reported_member = (robot.brain.get REPORTED_MEMBER_KEY) or []
     members = (robot.brain.get MEMBER_LIST_KEY) or []
     diff = (list1, list2)-> (value for value in list1 when list2.indexOf(value) is -1)
-    robot.send {room: CHANNEL},
-      "みなさんそろそろデイリースクラムのお時間ですよ。dailyと文中にいれてくださいね。\n <#{diff(members, reported_member).join('> <')}>"
+    unreported_member = diff(members, reported_member)
+    if unreported_member.length > 0
+      robot.send {room: CHANNEL},
+        "みなさんそろそろデイリースクラムのお時間ですよ。dailyと文中にいれてくださいね。\n <#{unreported_member.join('> <')}>"
+    else
+      robot.send {room: CHANNEL}, "なんと今日はみなさんすでにデイリースクラム終わってます。"
 
   robot.respond /test notification/i, (msg) ->
     notification()
@@ -40,8 +44,12 @@ module.exports = (robot) ->
     reported_member = (robot.brain.get REPORTED_MEMBER_KEY) or []
     members = (robot.brain.get MEMBER_LIST_KEY) or []
     diff = (list1, list2)-> (value for value in list1 when list2.indexOf(value) is -1)
-    robot.send {room: CHANNEL},
-      "一緒にデイリースクラムしましょうよお。\n <#{diff(members, reported_member).join('> <')}>"
+    unreported_member = diff(members, reported_member)
+    if unreported_member.length > 0
+      robot.send {room: CHANNEL},
+        "一緒にデイリースクラムしましょうよお。\n <#{unreported_member.join('> <')}>"
+    else
+      robot.send {room: CHANNEL}, "みなさん良いランチタイムを。"
 
   robot.respond /test confirm/i, (msg) ->
     confirm()
