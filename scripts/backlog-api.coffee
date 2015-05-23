@@ -9,16 +9,15 @@ module.exports = (robot) ->
       },
       (err, summary) ->
         if (err)
-          console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+          robot.send {room: 'bot_test'}, "error"
           throw err
         else
-          console.log(summary)
-          robot.send {room: 'bot_test'}, summary.current_milestone.burndown_chart.toString()
-          console.log("*******************")
+          robot.send {room: 'bot_test'}, "success"
+          robot.send {room: 'bot_test'}, summary.current_milestone.burndown_chart
 
     )
 
   robot.respond /get/i, (msg) ->
-    console.log('22222&&&&&&&&&&&&&&&&&&&&22' + process.env.BACKLOG_PROJECT_ID)
+    robot.send {room: 'bot_test'}, "get"
     getChart()
 
