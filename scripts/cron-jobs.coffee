@@ -21,7 +21,6 @@ module.exports = (robot) ->
       return
   )
 
-module.exports = (robot) ->
   new CronJob(
     cronTime: "0 0 12 * * 1-5"
     start: true
@@ -31,7 +30,6 @@ module.exports = (robot) ->
       return
   )
 
-module.exports = (robot) ->
   new CronJob(
     cronTime: "0 0 24 * * 1-5"
     start: true
@@ -41,17 +39,12 @@ module.exports = (robot) ->
       return
   )
 
-
-
-module.exports = (robot) ->
   robot.respond /test notification/i, (msg) ->
-  notification()
+    notification(robot)
 
-module.exports = (robot) ->
   robot.respond /test confirm/i, (msg) ->
     confirm(robot)
 
-module.exports = (robot) ->
   robot.respond /test reset reported/i, (msg) ->
     resetReportedMember(robot)
 
@@ -62,19 +55,15 @@ REPORTED_MEMBER_KEY = 'reported_member_list'
 
 CHANNEL = 'scrum'
 
-notification = (robot) ->
+notification = (robot)->
   lacks = unReportedMemberHelper(robot)
-  robot.send {room: CHANNEL},
-    "なんと今日はみなさんすでにデイリースクラム終わってます。" if lacks.length == 0
-  robot.send {room: CHANNEL},
-    "みなさんそろそろデイリースクラムのお時間ですよ。dailyと文中にいれてくださいね。\n <#{lacks.join('> <')}>" unless lacks.length == 0
+  robot.send {room: CHANNEL}, "なんと今日はみなさんすでにデイリースクラム終わってます。" if lacks.length == 0
+  robot.send {room: CHANNEL}, "みなさんそろそろデイリースクラムのお時間ですよ。dailyと文中にいれてくださいね。\n <#{lacks.join('> <')}>" unless lacks.length == 0
 
 confirm = (robot)->
   lacks = unReportedMemberHelper(robot)
-  robot.send {room: CHANNEL},
-    "みなさん良いランチタイムを。" if lacks.length == 0
-  robot.send {room: CHANNEL},
-    "一緒にデイリースクラムしましょうよお。\n <#{lacks.join('> <')}>" unless lacks.length == 0
+  robot.send {room: CHANNEL}, "みなさん良いランチタイムを。" if lacks.length == 0
+  robot.send {room: CHANNEL}, "一緒にデイリースクラムしましょうよお。\n <#{lacks.join('> <')}>" unless lacks.length == 0
 
 resetReportedMember = (robot) ->
   robot.brain.set REPORTED_MEMBER_KEY, []
