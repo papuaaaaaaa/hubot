@@ -117,7 +117,7 @@ secondReviewDayNotice = (robot) ->
   robot.send {room: CHANNEL}, "今日もレビュー日間です。みんなでよいコードを書きましょう。"
 
 thirdReviewDayNotice = (robot) ->
-  robot.send {room: CHANNEL}, "今日はレビュー日間の最終日です。あとから指摘されるくらいなら、できれば早めがいいですよね。"
+  robot.send {room: CHANNEL}, "今日はレビュー日間の最終日です。あとから指摘するのもいいんですけど、できればいまのうちにしてほしいですよね。"
 
 mergeDayNotice = (robot) ->
   robot.send {room: CHANNEL}, "今日はマージ作業日です。明日はdevelopブランチでスプリントレビューできるようにしておきましょう。"
