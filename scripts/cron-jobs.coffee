@@ -13,6 +13,7 @@ CronJob = require("cron").CronJob
 
 module.exports = (robot) ->
   new CronJob(
+    #         秒 分 時 日 月 週
     cronTime: "0 0 10 * * 1-5"
     start: true
     timeZone: "Asia/Tokyo"
