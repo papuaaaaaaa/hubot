@@ -78,7 +78,7 @@ module.exports = (robot) ->
   )
 
   robot.respond /test 1st notice/i, (msg) ->
-    mergeDayNotice(robot)
+    pullRequestDeadLineNotice(robot)
 
   robot.respond /test 2st notice/i, (msg) ->
     requestDeadLineConfirm(robot)
