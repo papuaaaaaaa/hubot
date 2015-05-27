@@ -13,13 +13,12 @@ CronJob = require("cron").CronJob
 
 module.exports = (robot) ->
   new CronJob(
-    #         秒 分 時 日 月 週
+#             秒 分 時 日 月 週
     cronTime: "0 0 10 * * 1-5"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
       notification(robot)
-      return
   )
 
   new CronJob(
@@ -28,7 +27,6 @@ module.exports = (robot) ->
     timeZone: "Asia/Tokyo"
     onTick: ->
       confirm(robot)
-      return
   )
 
   new CronJob(
@@ -37,7 +35,6 @@ module.exports = (robot) ->
     timeZone: "Asia/Tokyo"
     onTick: ->
       resetReportedMember(robot)
-      return
   )
 
   robot.respond /test notification/i, (msg) ->
@@ -48,7 +45,6 @@ module.exports = (robot) ->
 
   robot.respond /test reset reported/i, (msg) ->
     resetReportedMember(robot)
-
 
 
 MEMBER_LIST_KEY = 'member_list'
