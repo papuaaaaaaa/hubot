@@ -126,7 +126,7 @@ mergeDayConfirm = (robot) ->
   robot.send {room: CHANNEL}, "スプリントレビューは明日です。マージは終わりましたか？今週もお疲れさまでした。"
 
 sprintReviewNotice = (robot) ->
-  robot.send {room: CHANNEL}, "今日は新しいスプリントの開始日です。"
+  robot.send {room: CHANNEL}, "今日は新しいスプリントの開始日です。前回の振り返りにも目を通しておきましょう。 <https://docs.google.com/document/d/1P2UsFDWczFtpcwQrcillakOLpftB9rn3VP20UVcpk6s/edit>"
 
 
 
