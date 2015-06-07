@@ -14,10 +14,9 @@ module.exports = (robot) ->
         else
           robot.send {room: 'bot_test'}, "success"
           robot.send {room: 'bot_test'}, summary.current_milestone.burndown_chart
-
     )
 
-  robot.respond /get/i, (msg) ->
+  robot.respond /backlog get/i, (msg) ->
     robot.send {room: 'bot_test'}, "get"
     getChart()
 
