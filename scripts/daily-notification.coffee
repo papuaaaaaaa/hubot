@@ -11,10 +11,18 @@
 
 CronJob = require("cron").CronJob
 
-module.exports = (robot) ->
+#sprint-management.coffeeから設定値をコピーしているので危険
+WEEK_INDEX_KEY = 'week_count'
+SPRINT_COUNT_KEY = 'sprint_count'
+WEEK_NUMBER_IN_SPRINT = 2
 
+CHANNEL = 'bot_test'
+FIRST_WEEK_INDEX = 0
+SECOND_WEEK_INDEX = 1
+
+module.exports = (robot) ->
   new CronJob(
-    cronTime: "10 0 10 * * 5/2"
+    cronTime: "10 0 10 * * 5"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
@@ -22,7 +30,7 @@ module.exports = (robot) ->
   )
 
   new CronJob(
-    cronTime: "10 0 18 * * 5/2"
+    cronTime: "10 0 18 * * 5"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
@@ -30,7 +38,7 @@ module.exports = (robot) ->
   )
 
   new CronJob(
-    cronTime: "10 0 10 * * 1/2"
+    cronTime: "10 0 10 * * 1"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
@@ -38,7 +46,7 @@ module.exports = (robot) ->
   )
 
   new CronJob(
-    cronTime: "10 0 10 * * 2/2"
+    cronTime: "10 0 10 * * 2"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
@@ -46,7 +54,7 @@ module.exports = (robot) ->
   )
 
   new CronJob(
-    cronTime: "10 0 10 * * 3/2"
+    cronTime: "10 0 10 * * 3"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
@@ -54,7 +62,7 @@ module.exports = (robot) ->
   )
 
   new CronJob(
-    cronTime: "10 0 10 * * 4/2"
+    cronTime: "10 0 10 * * 4"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
@@ -62,7 +70,7 @@ module.exports = (robot) ->
   )
 
   new CronJob(
-    cronTime: "10 0 18 * * 4/2"
+    cronTime: "10 0 18 * * 4"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
@@ -70,7 +78,7 @@ module.exports = (robot) ->
   )
 
   new CronJob(
-    cronTime: "10 0 10 * * 5/2"
+    cronTime: "10 0 10 * * 5"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
@@ -101,34 +109,47 @@ module.exports = (robot) ->
   robot.respond /test 8st notice/i, (msg) ->
     sprintReviewNotice(robot)
 
-CHANNEL = 'bot_test'
-
-
 pullRequestDeadLineNotice = (robot) ->
-  robot.send {room: CHANNEL}, "今日中にPullRequestを出して帰りましょうね。"
+  if isFirstWeek(robot)
+    robot.send {room: CHANNEL}, "今日中にPullRequestを出して帰りましょうね。"
 
 requestDeadLineConfirm = (robot) ->
-  robot.send {room: CHANNEL}, "PullRequestは出しましたか？今週の稼働時間の入力もお忘れなく。自分たちのために正確な見積もりを出しましょう。"
+  if isFirstWeek(robot)
+    robot.send {room: CHANNEL}, "PullRequestは出しましたか？今週の稼働時間の入力もお忘れなく。"
 
 firstReviewDayNotice = (robot) ->
-  robot.send {room: CHANNEL}, "今日はレビュー日間です。お互いコードレビューしてあげましょう。"
+  if isSecondWeek(robot)
+    robot.send {room: CHANNEL}, "今日はレビュー日間です。お互いコードレビューしてあげましょう。"
 
 secondReviewDayNotice = (robot) ->
-  robot.send {room: CHANNEL}, "今日もレビュー日間です。みんなでよいコードを書きましょう。"
+  if isSecondWeek(robot)
+    robot.send {room: CHANNEL}, "今日もレビュー日間です。みんなでよいコードを書きましょう。"
 
 thirdReviewDayNotice = (robot) ->
-  robot.send {room: CHANNEL}, "今日はレビュー日間の最終日です。あとから指摘するのもいいんですけど、できればいまのうちにしてほしいですよね。"
+  if isSecondWeek(robot)
+    robot.send {room: CHANNEL}, "今日はレビュー日間の最終日です。あとから指摘するのもいいんですけど、できればいまのうちにしてほしいですよね。"
 
 mergeDayNotice = (robot) ->
-  robot.send {room: CHANNEL}, "今日はマージ作業日です。明日はdevelopブランチでスプリントレビューできるようにしておきましょう。"
+  if isSecondWeek(robot)
+    robot.send {room: CHANNEL}, "今日はマージ作業日です。明日はdevelopブランチでスプリントレビューできるようにしておきましょう。"
 
 mergeDayConfirm = (robot) ->
-  robot.send {room: CHANNEL}, "スプリントレビューは明日です。マージは終わりましたか？今週もお疲れさまでした。"
+  if isSecondWeek(robot)
+    robot.send {room: CHANNEL}, "マージは終わりましたか？スプリントレビューは明日です。今週もお疲れさまでした。"
 
 sprintReviewNotice = (robot) ->
-  robot.send {room: CHANNEL}, "今日は新しいスプリントの開始日です。前回の振り返りにも目を通しておきましょう。 <https://docs.google.com/document/d/1P2UsFDWczFtpcwQrcillakOLpftB9rn3VP20UVcpk6s/edit>"
+  num = robot.brain.get SPRINT_COUNT_KEY
+  num = if num == null then 0 else num
+  robot.send {room: CHANNEL}, "今日は新しいsprint#{num}の開始日です。sprint#{num - 1}の振り返りにも目を通しておきましょう。" + "https://docs.google.com/document/d/1P2UsFDWczFtpcwQrcillakOLpftB9rn3VP20UVcpk6s/edit"
 
+isFirstWeek = (robot) ->
+  num = robot.brain.get WEEK_INDEX_KEY
+  num = if num == null then 0 else num
+  return if num == FIRST_WEEK_INDEX
 
-
+isSecondWeek = (robot) ->
+  num = robot.brain.get WEEK_INDEX_KEY
+  num = if num == null then 0 else num
+  return if num == SECOND_WEEK_INDEX
 
 
