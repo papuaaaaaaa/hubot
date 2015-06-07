@@ -22,13 +22,13 @@ module.exports = (robot) ->
   robot.hear /sprint count init (.+)/i, (msg) ->
     number = parseInt(msg.match[1], 10)
     unless number == NaN
-      robot.brain.set SPRINT_COUNT_KEY, msg.match[1]
+      robot.brain.set SPRINT_COUNT_KEY, number
       msg.send "sprint count initialized to #{number}."
 
   robot.hear /week index init (.+)/i, (msg) ->
     number = parseInt(msg.match[1], 10)
     unless number == NaN
-      robot.brain.set WEEK_INDEX_KEY, msg.match[1]
+      robot.brain.set WEEK_INDEX_KEY, number
       msg.send "week index initialized to #{number}."
 
   robot.hear /get sprint count/i, (msg) ->
