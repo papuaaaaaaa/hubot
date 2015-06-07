@@ -145,11 +145,11 @@ sprintReviewNotice = (robot) ->
 isFirstWeek = (robot) ->
   num = robot.brain.get WEEK_INDEX_KEY
   num = if num == null then 0 else num
-  return if num == FIRST_WEEK_INDEX
+  num == FIRST_WEEK_INDEX
 
 isSecondWeek = (robot) ->
   num = robot.brain.get WEEK_INDEX_KEY
   num = if num == null then 0 else num
-  return if num == SECOND_WEEK_INDEX
+  num == SECOND_WEEK_INDEX
 
 
