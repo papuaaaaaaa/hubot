@@ -29,7 +29,7 @@ module.exports = (robot) ->
     number = parseInt(msg.match[1], 10)
     unless number == NaN
       robot.brain.set WEEK_INDEX_KEY, msg.match[1]
-      msg.send "sprint count initialized to #{number}."
+      msg.send "week index initialized to #{number}."
 
   robot.hear /get sprint count/i, (msg) ->
     num = robot.brain.get SPRINT_COUNT_KEY
@@ -39,7 +39,7 @@ module.exports = (robot) ->
   robot.hear /get week index/i, (msg) ->
     num = robot.brain.get WEEK_INDEX_KEY
     num = if num == null then 0 else num
-    msg.send "week count is #{num}."
+    msg.send "week index is #{num}."
 
   new CronJob(
     cronTime: "0 0 24 * * 7"
