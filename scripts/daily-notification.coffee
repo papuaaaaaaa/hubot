@@ -16,7 +16,7 @@ WEEK_INDEX_KEY = 'week_index'
 SPRINT_COUNT_KEY = 'sprint_count'
 WEEK_NUMBER_IN_SPRINT = 2
 
-CHANNEL = 'bot_test'
+CHANNEL = 'scrum'
 FIRST_WEEK_INDEX = 0
 SECOND_WEEK_INDEX = 1
 
@@ -161,13 +161,11 @@ startOfSprint = (robot) ->
 isFirstWeek = (robot) ->
   num = robot.brain.get WEEK_INDEX_KEY
   num = if num == null then 0 else num
-  robot.send {room: CHANNEL}, "#{num} == #{FIRST_WEEK_INDEX}"
   num == FIRST_WEEK_INDEX
 
 isSecondWeek = (robot) ->
   num = robot.brain.get WEEK_INDEX_KEY
   num = if num == null then 0 else num
-  robot.send {room: CHANNEL}, "#{num} == #{SECOND_WEEK_INDEX}"
   num == SECOND_WEEK_INDEX
 
 
