@@ -12,7 +12,7 @@
 CronJob = require("cron").CronJob
 
 #sprint-management.coffeeから設定値をコピーしているので危険
-WEEK_INDEX_KEY = 'week_count'
+WEEK_INDEX_KEY = 'week_index'
 SPRINT_COUNT_KEY = 'sprint_count'
 WEEK_NUMBER_IN_SPRINT = 2
 
@@ -21,7 +21,6 @@ FIRST_WEEK_INDEX = 0
 SECOND_WEEK_INDEX = 1
 
 module.exports = (robot) ->
-
   new CronJob(
     cronTime: "10 0 10 * * 5"
     start: true

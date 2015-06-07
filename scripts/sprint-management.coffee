@@ -11,7 +11,7 @@
 #   papuaaaaaaa
 
 #daily-notification.coffeeに設定値をコピーしているので危険
-WEEK_INDEX_KEY = 'week_count'
+WEEK_INDEX_KEY = 'week_index'
 SPRINT_COUNT_KEY = 'sprint_count'
 WEEK_NUMBER_IN_SPRINT = 2
 
