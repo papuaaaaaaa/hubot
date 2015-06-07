@@ -21,6 +21,7 @@ FIRST_WEEK_INDEX = 0
 SECOND_WEEK_INDEX = 1
 
 module.exports = (robot) ->
+
   new CronJob(
     cronTime: "10 0 10 * * 5"
     start: true
@@ -85,6 +86,14 @@ module.exports = (robot) ->
       sprintReviewNotice(robot)
   )
 
+  new CronJob(
+    cronTime: "10 0 10 * * 1"
+    start: true
+    timeZone: "Asia/Tokyo"
+    onTick: ->
+      startOfSprint(robot)
+  )
+
   robot.respond /test 1st notice/i, (msg) ->
     pullRequestDeadLineNotice(robot)
 
@@ -108,6 +117,9 @@ module.exports = (robot) ->
 
   robot.respond /test 8st notice/i, (msg) ->
     sprintReviewNotice(robot)
+
+  robot.respond /test 9st notice/i, (msg) ->
+    startOfSprint(robot)
 
 pullRequestDeadLineNotice = (robot) ->
   if isFirstWeek(robot)
@@ -135,12 +147,17 @@ mergeDayNotice = (robot) ->
 
 mergeDayConfirm = (robot) ->
   if isSecondWeek(robot)
-    robot.send {room: CHANNEL}, "マージは終わりましたか？スプリントレビューは明日です。今週もお疲れさまでした。"
+    robot.send {room: CHANNEL}, "マージは終わりましたか？スプリントレビューは明日です。"
 
 sprintReviewNotice = (robot) ->
-  num = robot.brain.get SPRINT_COUNT_KEY
-  num = if num == null then 0 else num
-  robot.send {room: CHANNEL}, "今日は新しいsprint#{num}の開始日です。sprint#{num - 1}の振り返りにも目を通しておきましょう。" + "https://docs.google.com/document/d/1P2UsFDWczFtpcwQrcillakOLpftB9rn3VP20UVcpk6s/edit"
+  if isSecondWeek(robot)
+    robot.send {room: CHANNEL}, "今日はスプリントレビューとスプリント計画MTGの開催日です。"
+
+startOfSprint = (robot) ->
+  if isFirstWeek(robot)
+    num = robot.brain.get SPRINT_COUNT_KEY
+    num = if num == null then 0 else num
+    robot.send {room: CHANNEL}, "今日は新しいsprint#{num}の開始日です。sprint#{num - 1}の振り返りにも目を通しておきましょう。https://docs.google.com/document/d/1P2UsFDWczFtpcwQrcillakOLpftB9rn3VP20UVcpk6s/edit"
 
 isFirstWeek = (robot) ->
   num = robot.brain.get WEEK_INDEX_KEY
