@@ -161,11 +161,13 @@ startOfSprint = (robot) ->
 isFirstWeek = (robot) ->
   num = robot.brain.get WEEK_INDEX_KEY
   num = if num == null then 0 else num
+  robot.send {room: CHANNEL}, "#{num} == #{FIRST_WEEK_INDEX}"
   num == FIRST_WEEK_INDEX
 
 isSecondWeek = (robot) ->
   num = robot.brain.get WEEK_INDEX_KEY
   num = if num == null then 0 else num
+  robot.send {room: CHANNEL}, "#{num} == #{SECOND_WEEK_INDEX}"
   num == SECOND_WEEK_INDEX
 
 
