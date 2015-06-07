@@ -156,7 +156,7 @@ startOfSprint = (robot) ->
   if isFirstWeek(robot)
     num = robot.brain.get SPRINT_COUNT_KEY
     num = if num == null then 0 else num
-    robot.send {room: CHANNEL}, "今日は新しいsprint#{num}の開始日です。sprint#{num - 1}の振り返りにも目を通しておきましょう。https://docs.google.com/document/d/1P2UsFDWczFtpcwQrcillakOLpftB9rn3VP20UVcpk6s/edit"
+    robot.send {room: CHANNEL}, "今日は新しいsprint#{num}の開始日です。sprint#{num - 1}の振り返りはこちらです。https://docs.google.com/document/d/1P2UsFDWczFtpcwQrcillakOLpftB9rn3VP20UVcpk6s/edit"
 
 isFirstWeek = (robot) ->
   num = robot.brain.get WEEK_INDEX_KEY
