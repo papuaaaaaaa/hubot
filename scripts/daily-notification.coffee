@@ -50,7 +50,7 @@ module.exports = (robot) ->
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
-      secondReviewDayNotice(robot)
+      modelReviewDayNotice(robot)
   )
 
   new CronJob(
@@ -103,7 +103,7 @@ module.exports = (robot) ->
     firstReviewDayNotice(robot)
 
   robot.respond /test 4st notice/i, (msg) ->
-    secondReviewDayNotice(robot)
+    modelReviewDayNotice(robot)
 
   robot.respond /test 5st notice/i, (msg) ->
     thirdReviewDayNotice(robot)
@@ -120,6 +120,10 @@ module.exports = (robot) ->
   robot.respond /test 9st notice/i, (msg) ->
     startOfSprint(robot)
 
+modelReviewDayNotice = (robot) ->
+  if isFirstWeek(robot)
+    robot.send {room: CHANNEL}, "今日はモデルのレビュー日です。午前中までにモデリングのレビューをしてあげましょう。"
+
 pullRequestDeadLineNotice = (robot) ->
   if isFirstWeek(robot)
     robot.send {room: CHANNEL}, "今日中にPullRequestを出して帰りましょうね。"
@@ -130,15 +134,11 @@ requestDeadLineConfirm = (robot) ->
 
 firstReviewDayNotice = (robot) ->
   if isSecondWeek(robot)
-    robot.send {room: CHANNEL}, "今日はレビュー日間です。お互いコードレビューしてあげましょう。"
-
-secondReviewDayNotice = (robot) ->
-  if isSecondWeek(robot)
-    robot.send {room: CHANNEL}, "今日もレビュー日間です。みんなでよいコードを書きましょう。"
+    robot.send {room: CHANNEL}, "今日はレビュー日です。モデリングとコードに相違はないか、大まかな設計方針は合っているかの観点で午前中に確実にレビューしてあげましょう。"
 
 thirdReviewDayNotice = (robot) ->
   if isSecondWeek(robot)
-    robot.send {room: CHANNEL}, "今日はレビュー日間の最終日です。あとから指摘するのもいいんですけど、できればいまのうちにしてほしいですよね。"
+    robot.send {room: CHANNEL}, "明日はマージ日です。マージ前の最終レビューを、午前中にしてあげましょう。"
 
 mergeDayNotice = (robot) ->
   if isSecondWeek(robot)
@@ -156,7 +156,7 @@ startOfSprint = (robot) ->
   if isFirstWeek(robot)
     num = robot.brain.get SPRINT_COUNT_KEY
     num = if num == null then 0 else num
-    robot.send {room: CHANNEL}, "今日は新しいsprint#{num}の開始日です。sprint#{num - 1}の振り返りはこちらです。https://docs.google.com/document/d/1P2UsFDWczFtpcwQrcillakOLpftB9rn3VP20UVcpk6s/edit"
+    robot.send {room: CHANNEL}, "今日は新しいsprint#{num}の開始日です。sprint#{num - 1}の振り返りはこちらです。#{process.env.SPRINT_MTG_DOCUMENT}"
 
 isFirstWeek = (robot) ->
   num = robot.brain.get WEEK_INDEX_KEY
