@@ -18,7 +18,6 @@ WEEK_NUMBER_IN_SPRINT = 2
 CronJob = require("cron").CronJob
 
 module.exports = (robot) ->
-
   robot.hear /sprint count init (.+)/i, (msg) ->
     number = parseInt(msg.match[1], 10)
     unless number == NaN
@@ -42,7 +41,7 @@ module.exports = (robot) ->
     msg.send "week index is #{num}."
 
   new CronJob(
-    cronTime: "0 0 24 * * 7"
+    cronTime: "0 0 24 * * 4"
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
