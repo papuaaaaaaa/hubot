@@ -100,7 +100,7 @@ module.exports = (robot) ->
     start: true
     timeZone: "Asia/Tokyo"
     onTick: ->
-      if isSecondWeek(robot)
+      if isFirstWeek(robot)
         num = robot.brain.get SPRINT_COUNT_KEY
         num = if num == null then 0 else num
         robot.send {room: CHANNEL}, "今日は新しいsprint#{num}の開始日です。sprint#{num - 1}の振り返りはこちらです。#{process.env.SPRINT_MTG_DOCUMENT}"
